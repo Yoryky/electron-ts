@@ -112,8 +112,13 @@
       <button style="margin:20px" v-on:click="sendmessage">send message</button>
     </div>
 
-    <div>
+    <div v-if="false">
       <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" @change="onEditorChange" style="height:600px;"></quill-editor>
+    </div>
+
+    <div>
+      <button @click="onAddPara">添加标签</button>
+      <chat-input ref="chatInput" v-model="testContent"/>
     </div>
 
   </div>
@@ -126,14 +131,16 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import QuillEditor from "@/components/editor.vue";
+import ChatInput from "@/components/ChatInput.vue";
 let client: any;
 export default defineComponent({
   
   name: "HelloWorld",
-  components: {QuillEditor},
+  components: {ChatInput, QuillEditor},
   data(){
     return{
       content: '',
+      testContent: 'dreamsqin',
       editorOption: {
         placeholder: '编辑文章内容'
       },
@@ -143,6 +150,13 @@ export default defineComponent({
     msg: String,
   },
   methods: {
+    onAddPara() {
+      const p = document.createElement("p")
+      p.innerHTML = "hello"
+      p.style.display = 'inline'
+      this.testContent = "hello"
+      this.$refs.chatInput.insertHtmlAtCaret(p)
+    },
     onEditorChange({ editor, html, text }) {
       this.content = html;
       console.log(`onEditorChange html ==> ${html} text ==> ${text}`)
