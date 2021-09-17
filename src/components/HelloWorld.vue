@@ -3,7 +3,7 @@
     <div>
       <h1>{{ msg }}</h1>
       <p>
-        For a guide and recipes on how to configure / customize this project,<br />
+        For a guide and recipes on how to configure / customize this project,<br/>
         check out the
         <a href="https://cli.vuejs.org" target="_blank" rel="noopener"
         >vue-cli documentation</a
@@ -112,27 +112,34 @@
       <button style="margin:20px" v-on:click="sendmessage">send message</button>
     </div>
 
+    <div v-if="false">
+      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" @change="onEditorChange"
+                    style="height:600px;"></quill-editor>
+    </div>
+
     <div>
-      <quill-editor ref="myTextEditor" v-model="content" :options="editorOption" @change="onEditorChange" style="height:600px;"></quill-editor>
+      <chat-input/>
     </div>
 
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import * as XMPP from "stanza";
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import QuillEditor from "@/components/editor.vue";
+import ChatInput from "@/components/ChatInput.vue";
+
 let client: any;
 export default defineComponent({
-  
+
   name: "HelloWorld",
-  components: {QuillEditor},
-  data(){
-    return{
+  components: {ChatInput, QuillEditor},
+  data() {
+    return {
       content: '',
       editorOption: {
         placeholder: '编辑文章内容'
@@ -143,7 +150,7 @@ export default defineComponent({
     msg: String,
   },
   methods: {
-    onEditorChange({ editor, html, text }) {
+    onEditorChange({editor, html, text}) {
       this.content = html;
       console.log(`onEditorChange html ==> ${html} text ==> ${text}`)
     },
@@ -211,14 +218,17 @@ export default defineComponent({
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
   display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
